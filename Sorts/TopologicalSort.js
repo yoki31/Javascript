@@ -1,5 +1,5 @@
 
-function TopologicalSorter () {
+export function TopologicalSorter () {
   const graph = {}
   let isVisitedNode
   let finishTimeCount
@@ -42,18 +42,18 @@ function TopologicalSorter () {
     }
 
     finishingTimeList.push({
-      node: node,
+      node,
       finishTime: ++finishTimeCount
     })
   }
 }
 
 /* TEST */
-const topoSorter = new TopologicalSorter()
-topoSorter.addOrder(5, 2)
-topoSorter.addOrder(5, 0)
-topoSorter.addOrder(4, 0)
-topoSorter.addOrder(4, 1)
-topoSorter.addOrder(2, 3)
-topoSorter.addOrder(3, 1)
-console.log(topoSorter.sortAndGetOrderedItems())
+// const topoSorter = new TopologicalSorter()
+// topoSorter.addOrder(5, 2)
+// topoSorter.addOrder(5, 0)
+// topoSorter.addOrder(4, 0)
+// topoSorter.addOrder(4, 1)
+// topoSorter.addOrder(2, 3)
+// topoSorter.addOrder(3, 1)
+// topoSorter.sortAndGetOrderedItems()

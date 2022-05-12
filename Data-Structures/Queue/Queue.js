@@ -1,80 +1,114 @@
 /* Queue
 * A Queue is a data structure that allows you to add an element to the end of
-* a list and remove the item at the front. A queue follows a "First In First Out"
-* system, where the first item to enter the queue is the first to be removed. This
-* implementation uses an array to store the queue.
+* a list and remove the item at the front. A queue follows a FIFO (First In First Out)
+* system, where the first item to enter the queue is the first to be removed,
+* All these operation complexities are O(1).
+* This implementation following the linked list structure.
 */
 
-// Functions: enqueue, dequeue, peek, view, length
+class Queue {
+  #size
 
-const Queue = (function () {
-  // constructor
-  function Queue () {
-    // This is the array representation of the queue
-    this.queue = []
+  constructor () {
+    this.head = null
+    this.tail = null
+    this.#size = 0
+
+    return Object.seal(this)
   }
 
-  // methods
-  // Add a value to the end of the queue
-  Queue.prototype.enqueue = function (item) {
-    this.queue.push(item)
+  get length () {
+    return this.#size
   }
 
-  // Removes the value at the front of the queue
-  Queue.prototype.dequeue = function () {
-    if (this.queue.length === 0) {
+  /**
+   * @description - Add a value to the end of the queue
+   * @param {*} data
+   * @returns {number} - The current size of queue
+   */
+  enqueue (data) {
+    const node = { data, next: null }
+
+    if (!this.head && !this.tail) {
+      this.head = node
+      this.tail = node
+    } else {
+      this.tail.next = node
+      this.tail = node
+    }
+
+    return ++this.#size
+  }
+
+  /**
+   * @description - Removes the value at the front of the queue
+   * @returns {*} - The first data of the queue
+   */
+  dequeue () {
+    if (this.isEmpty()) {
       throw new Error('Queue is Empty')
     }
 
-    const result = this.queue[0]
-    this.queue.splice(0, 1) // remove the item at position 0 from the array
+    const firstData = this.peekFirst()
 
-    return result
+    this.head = this.head.next
+
+    if (!this.head) {
+      this.tail = null
+    }
+
+    this.#size--
+
+    return firstData
   }
 
-  // Return the length of the queue
-  Queue.prototype.length = function () {
-    return this.queue.length
+  /**
+   * @description - Return the item at the front of the queue
+   * @returns {*}
+   */
+  peekFirst () {
+    if (this.isEmpty()) {
+      throw new Error('Queue is Empty')
+    }
+
+    return this.head.data
   }
 
-  // Return the item at the front of the queue
-  Queue.prototype.peek = function () {
-    return this.queue[0]
+  /**
+   * @description - Return the item at the tail of the queue
+   * @returns {*}
+   */
+  peekLast () {
+    if (this.isEmpty()) {
+      throw new Error('Queue is Empty')
+    }
+
+    return this.tail.data
   }
 
-  // List all the items in the queue
-  Queue.prototype.view = function () {
-    console.log(this.queue)
+  /**
+   * @description - Return the array of Queue
+   * @returns {Array<*>}
+   */
+  toArray () {
+    const array = []
+    let node = this.head
+
+    while (node) {
+      array.push(node.data)
+      node = node.next
+    }
+
+    return array
   }
 
-  return Queue
-}())
-
-// Implementation
-const myQueue = new Queue()
-
-myQueue.enqueue(1)
-myQueue.enqueue(5)
-myQueue.enqueue(76)
-myQueue.enqueue(69)
-myQueue.enqueue(32)
-myQueue.enqueue(54)
-
-myQueue.view()
-
-console.log(`Length: ${myQueue.length()}`)
-console.log(`Front item: ${myQueue.peek()}`)
-console.log(`Removed ${myQueue.dequeue()} from front.`)
-console.log(`New front item: ${myQueue.peek()}`)
-console.log(`Removed ${myQueue.dequeue()} from front.`)
-console.log(`New front item: ${myQueue.peek()}`)
-myQueue.enqueue(55)
-console.log('Inserted 55')
-console.log(`New front item: ${myQueue.peek()}`)
-
-for (let i = 0; i < 5; i++) {
-  myQueue.dequeue()
-  myQueue.view()
+  /**
+  * @description - Return is queue empty or not
+  * @returns {boolean}
+  */
+  isEmpty () {
+    return this.length === 0
+  }
 }
 
-// console.log(myQueue.dequeue()); // throws exception!
+export default Queue

@@ -25,6 +25,7 @@ const Timsort = (array) => {
       Merge(array, left, mid, right)
     }
   }
+  return array
 }
 
 /**
@@ -85,10 +86,10 @@ const Merge = (array, left, mid, right) => {
 /**
  * @example Test of Timsort functions.
  * Data is randomly generated.
- * Prints "RIGHT" if it works as expected,
+ * Return "RIGHT" if it works as expected,
  * otherwise "FAULTY"
  */
-(() => {
+const demo = () => {
   const size = 1000000
   const data = Array(size)
   for (let i = 0; i < size; i++) {
@@ -103,8 +104,10 @@ const Merge = (array, left, mid, right) => {
   }
   Timsort(data)
   if (isSorted(data)) {
-    console.log('RIGHT')
+    return 'RIGHT'
   } else {
-    console.log('FAULTY')
+    return 'FAULTY'
   }
-})()
+}
+
+export { Timsort, demo }

@@ -18,7 +18,7 @@ function Trie () {
 Trie.findAllWords = function (root, word, output) {
   if (root === null) return
   if (root.count > 0) {
-    if (typeof output === 'object') { output.push({ word: word, count: root.count }) }
+    if (typeof output === 'object') { output.push({ word, count: root.count }) }
   }
   let key
   for (key in root.children) {
@@ -116,22 +116,6 @@ Trie.prototype.findOccurences = function (word) {
   // No such word exists
   if (node === null) return 0
   return node.count
-};
+}
 
-// To test
-(function demo () {
-  const x = new Trie()
-  x.insert('sheldon')
-  x.insert('hello')
-  x.insert('anyword')
-  x.insert('sheldoncooper')
-  console.log(x.findOccurences('sheldon'))
-  x.remove('anything')
-  x.insert('sheldon')
-  console.log(x.findOccurences('sheldon'))
-  console.log(x.findAllWords('sheldon'))
-  x.insert('anything')
-  x.remove('sheldoncooper')
-  console.log(x.contains('sheldoncooper'))
-  console.log(x.findAllWords('sheldon'))
-})()
+export { Trie }
